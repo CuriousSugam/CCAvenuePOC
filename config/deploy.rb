@@ -13,10 +13,10 @@ set :application, 'CcAvenuePOC'
 set :scm, :git
 
 #Github url for the repo
-# set :repo_url, 'git@github.com:leapfrogtechnology/MachnetHotels.git'
+set :repo_url, 'git@github.com:CuriousSugam/POC.git'
 
 #Server user
-set :user, "admin_user"
+set :user, "deploy"
 
 
 
