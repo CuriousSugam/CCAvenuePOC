@@ -7,7 +7,7 @@ set :initial, ENV['initial'] || 'false'
 set :rvm_ruby_version, 'ruby-2.2.0'
 
 #Application name
-set :application, 'CcAvenuePOC'
+set :application, 'ccavenues_poc'
 
 # Default value for :scm is :git
 set :scm, :git
@@ -18,9 +18,27 @@ set :repo_url, 'git@github.com:CuriousSugam/POC.git'
 #Server user
 set :user, "deploy"
 
+set :deploy_to, "/home/projects/dev/ccavenues_poc"
+
+set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml', 'config/application.yml')
+set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/uploads')
 
 
-set :application, "Cc_avenues_POC"
+namespace :deploy do
+  desc "Upload database.yml and application.yml files."
+  task :yml do
+    on roles(:app) do
+      execute "mkdir -p #{shared_path}/config"
+      upload! StringIO.new(File.read("config/database.yml")), "#{shared_path}/config/database.yml"
+      upload! StringIO.new(File.read("config/application.yml")), "#{shared_path}/config/application.yml"
+    end
+  end
+end
+
+
+
+
+# set :application, "Cc_avenues_POC"
 # set :repo_url, "git@example.com:me/my_repo.git"
 
 # Default branch is :master
