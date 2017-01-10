@@ -4,7 +4,7 @@ lock "3.7.1"
 set :initial, ENV['initial'] || 'false'
 
 #rvm version in server
-set :rvm_ruby_version, 'ruby-2.2.0'
+set :rvm_ruby_version, 'ruby-2.3.3'
 
 #Application name
 set :application, 'ccavenues_poc'
@@ -20,11 +20,35 @@ set :user, "deploy"
 
 set :deploy_to, "/home/projects/dev/ccavenues_poc"
 
-set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml', 'config/application.yml')
-set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/uploads')
+set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/application.yml')
+set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
 
 
 namespace :deploy do
+
+  desc 'Reload application'
+  task :reload do
+    desc "Reload app after change"
+    on roles(:app), in: :sequence, wait: 5 do
+      # Your restart mechanism here, for example:
+      execute :touch, release_path.join('tmp/restart.txt')
+    end
+  end
+
+  %w[start stop restart].each do |command|
+    desc "#{command} Nginx."
+    task command do
+      on roles(:app) do
+        execute "sudo service nginx #{command}"
+      end
+    end
+  end
+
+  after :publishing, :reload
+end
+
+namespace :setup do
+
   desc "Upload database.yml and application.yml files."
   task :yml do
     on roles(:app) do
@@ -33,6 +57,8 @@ namespace :deploy do
       upload! StringIO.new(File.read("config/application.yml")), "#{shared_path}/config/application.yml"
     end
   end
+
+  before 'deploy:starting', 'setup:yml'
 end
 
 
