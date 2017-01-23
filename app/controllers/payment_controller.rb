@@ -4,7 +4,6 @@ class PaymentController < ApplicationController
 
 	# include Crypto
 	def index
-		byebug
 	end
 
 	def sample
