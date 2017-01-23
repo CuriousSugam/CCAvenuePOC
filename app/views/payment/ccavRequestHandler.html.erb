@@ -10,7 +10,7 @@
     end
     encrypted_data = @crypto.encrypt(merchantData,working_key)
   %>
-    <iframe  width="482" height="500" scrolling="No" frameborder="0"  id="paymentFrame" src="https://test.ccavenue.com/transaction/transaction.do?command=initiateTransaction&encRequest=<%=encrypted_data %>&access_code=<%=access_code %>"></iframe>
+    <iframe  width="482" height="500" scrolling="Yes" frameborder="0"  id="paymentFrame" src="https://test.ccavenue.com/transaction/transaction.do?command=initiateTransaction&encRequest=<%=encrypted_data %>&access_code=<%=access_code %>"></iframe>
 </center>
 
 <!--<script type="text/javascript" src="assets/javascripts/jquery-1.7.2.js"></script>-->
