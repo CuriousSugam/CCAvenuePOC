@@ -11,7 +11,7 @@
       merchantData += key+"="+value+"&"
     end
 
-    byebug
+    # byebug
     encrypted_data = @crypto.encrypt(merchantData,working_key)
   %>
     <iframe  width="482" height="500" scrolling="Yes" frameborder="0"  id="paymentFrame" src="https://test.ccavenue.com/transaction/transaction.do?command=initiateTransaction&encRequest=<%=encrypted_data %>&access_code=<%=access_code %>"></iframe>
