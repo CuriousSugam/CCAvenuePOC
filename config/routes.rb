@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     collection do
       post 'ccavResponseHandler'
       post 'ccavRequestHandler'
+      get 'sample'
     end
   end
 end

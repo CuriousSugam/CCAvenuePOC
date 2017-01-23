@@ -7,6 +7,10 @@ class PaymentController < ApplicationController
 		byebug
 	end
 
+	def sample
+		render 'sampleInput'
+	end
+
 	def create
 		@crypto = Crypto.new
 		render 'ccavRequestHandler'
