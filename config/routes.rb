@@ -8,4 +8,7 @@ Rails.application.routes.draw do
       get 'sample'
     end
   end
+
+  get '/success', to: 'payment#success'
+  get '/test-redirect', to: 'payment#test_redirect'
 end

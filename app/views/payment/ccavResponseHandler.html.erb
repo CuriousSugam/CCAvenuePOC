@@ -21,11 +21,23 @@
 
       <%decResp.each do |key|%>
         <tr>
-          <td><%=key.from(0).to(key.index("=")-1)%> </td>
-          <td><%=key.from(key.index("=")+1).to(-1)%> </td>
+          <td><%= key %></td>
+          <td><%= temp = key.from(0).to(key.index("=")-1) %> </td>
+          <%
+            if temp.eql? 'merchant_param1'
+              merchant_param1 = temp
+            end
+
+          %>
+          <td><%= key.from(key.index("=")+1).to(-1)%> </td>
         </tr>
     <%end%>
   </table>
 </center>
+<script>
+  window.setTimeout(function(){
+    window.location.href = 'www.google.com';
+  }, 2000);
+</script>
 </body>
 </html>
