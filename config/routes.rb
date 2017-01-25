@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root 'payment#index'
-  resources :payment do
+  root 'payments#index'
+  resources :payments do
     collection do
       post 'pay'
       post 'ccavResponseHandler'
@@ -10,8 +10,8 @@ Rails.application.routes.draw do
     end
   end
 
-  get '/success', to: 'payment#success'
-  # post '/success', to: 'payment#success'
+  get '/success', to: 'payments#success'
+  # post '/success', to: 'payments#success'
 
-  get '/test-redirect', to: 'payment#test_redirect'
+  get '/test-redirect', to: 'payments#test_redirect'
 end
