@@ -28,16 +28,22 @@ class PaymentController < ApplicationController
 		redirect_to url
 	end
 
+	def pay
+		@crypto = Crypto.new
+		render 'ccavRequestHandler'
+	end
+
 	def success
+
 	end
 
 	def test_redirect
-		url = 'http://localhost:3004/success?success=true&order_id=12345&'
+		# url = 'http://localhost:3004/success?success=true&order_id=12345&'
 		# parameters = {}
 		# parameters[:success] = true
 		# parameters[:amount] = 12345
 		# parameters[:order_id] = 789
-		redirect_to url
+		# redirect_to url
 	end
 
 	private

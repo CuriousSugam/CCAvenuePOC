@@ -1,1 +1,9 @@
-<div><%= params %></div>
+<% if params[:order_status].eql? 'Success' %>
+    <div style="color: green;">Congratulations!!!</div>
+<% else %>
+    <div style="color: red;">Failure!!!</div>
+<% end %>
+
+<% params.each do |param| %>
+    <div><%= param %> = <%= params[param]%></div>
+<% end %>

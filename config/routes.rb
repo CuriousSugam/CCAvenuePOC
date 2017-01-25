@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root 'payment#index'
   resources :payment do
     collection do
+      post 'pay'
       post 'ccavResponseHandler'
       post 'ccavRequestHandler'
       get 'sample'
@@ -10,5 +11,7 @@ Rails.application.routes.draw do
   end
 
   get '/success', to: 'payment#success'
+  # post '/success', to: 'payment#success'
+
   get '/test-redirect', to: 'payment#test_redirect'
 end
