@@ -48,6 +48,7 @@ class PaymentsController < ApplicationController
 
 	def pay
 		@crypto = Crypto.new
+		@logger = Logger.new('logfile.log')
 		render 'ccavRequestHandler'
 	end
 

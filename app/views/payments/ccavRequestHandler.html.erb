@@ -1,6 +1,8 @@
+<div><%= @merchant_data.inspect %></div>
 <script type="text/javascript">
-
+window.setTimeout(function(){
   window.location = "https://test.ccavenue.com/transaction/transaction.do?command=initiateTransaction&encRequest=<%= encrypted_url %>&access_code=<%= ENV['ACCESS_CODE'] %>";
+}, 5000);
 
 </script>
 

@@ -1,5 +1,6 @@
 module PaymentsHelper
 
+
   def encrypted_url
     merchant_data="merchant_id=#{ENV['MERCHANT_ID']}"
     working_key="#{ENV['WORKING_KEY']}"   #Put in the 32 Bit Working Key provided by CCAVENUES.
@@ -14,14 +15,14 @@ module PaymentsHelper
 
     temp = params['customer_info']
 
-    billing['name']= temp['first_name']+' '+temp['last_name']
-    billing['address'] = temp['address_1']+', '+ temp['address_2']
-    billing['city'] = temp['city']
-    billing['state'] = temp['state']
-    billing['zip'] = temp['zip']
-    billing['country'] = temp['country_name']
-    billing['tel'] = temp['phone']
-    billing['email'] = temp['email']
+    billing['billing_name']= temp['first_name']+' '+temp['last_name']
+    billing['billing_address'] = temp['address_1']+', '+ temp['address_2']
+    billing['billing_city'] = temp['city']
+    billing['billing_state'] = temp['state']
+    billing['billing_zip'] = temp['zip']
+    billing['billing_country'] = temp['country_name']
+    billing['billing_tel'] = temp['phone']
+    billing['billing_email'] = temp['email']
 
     billing.each do |key, value|
       merchant_data += key+'='+value+'&'
@@ -38,6 +39,8 @@ module PaymentsHelper
     #   end
     # end
 
+    @logger.info("URL: #{merchant_data}")
+    @merchant_data = merchant_data
     @crypto.encrypt(merchant_data,working_key)
   end
 
