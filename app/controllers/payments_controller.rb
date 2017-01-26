@@ -19,13 +19,13 @@ class PaymentsController < ApplicationController
 	end
 
 	def ccavResponseHandler
-		workingKey="#{ENV['WORKING_KEY']}"#Put in the 32 Bit Working Key provided by CCAVENUES.
-		encResponse=params[:encResp]
+		working_key="#{ENV['WORKING_KEY']}"#Put in the 32 Bit Working Key provided by CCAVENUES.
+		enc_response=params[:encResp]
 		crypto = Crypto.new
-		decResp=crypto.decrypt(encResponse,workingKey);
-		decResp = decResp.split("&")
+		dec_resp=crypto.decrypt(enc_response,working_key);
+		dec_resp = dec_resp.split("&")
 
-		url = prepare_response_url decResp
+		url = prepare_response_url dec_resp
 
 		redirect_to url
 	end
@@ -50,9 +50,9 @@ class PaymentsController < ApplicationController
 
 	private
 
-	def prepare_response_url(decResp)
+	def prepare_response_url(dec_resp)
 		parameters = {}
-		decResp.each do |key|
+		dec_resp.each do |key|
 			parameters[key.from(0).to(key.index("=")-1)] = key.from(key.index("=")+1).to(-1)
 		end
 
