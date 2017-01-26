@@ -8,19 +8,20 @@ module PaymentsHelper
     amount = params[:total]
     order_id = params[:invoice_id]
 
+    merchant_data += "&currency=INR&redirect_url=https://test.machpay.com/payments/ccavResponseHandler&cancel_url=https://test.machpay.com/payments/ccavResponseHandler&integration_type=iframe_normal&language=EN&merchant_param1=#{referer}&amount=#{amount}&order_id=#{order_id}&"
+
     billing = {}
 
-    billing[:name]= params[:customer_info][:first_name]+' '+params[:customer_info][:last_name]
-    billing[:address] = params[:customer_info][:address_1]+', '+ params[:customer_info][:address_2]
-    billing[:city] = params[:customer_info][:city]
-    billing[:state] = params[:customer_info][:state]
-    billing[:zip] = params[:customer_info][:zip]
-    billing[:country] = params[:customer_info][:country_name]
-    billing[:tel] = params[:customer_info][:phone]
-    billing[:email] = params[:customer_info][:email]
+    temp = params['customer_info']
 
-
-    merchant_data += "&currency=INR&redirect_url=https://test.machpay.com/payments/ccavResponseHandler&cancel_url=https://test.machpay.com/payments/ccavResponseHandler&integration_type=iframe_normal&language=EN&merchant_param1=#{referer}&amount=#{amount}&order_id=#{order_id}&"
+    billing['name']= temp['first_name']+' '+temp['last_name']
+    billing['address'] = temp['address_1']+', '+ temp['address_2']
+    billing['city'] = temp['city']
+    billing['state'] = temp['state']
+    billing['zip'] = temp['zip']
+    billing['country'] = temp['country_name']
+    billing['tel'] = temp['phone']
+    billing['email'] = temp['email']
 
     billing.each do |key, value|
       merchant_data += key+'='+value+'&'
