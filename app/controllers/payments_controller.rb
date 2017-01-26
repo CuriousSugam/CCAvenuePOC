@@ -3,6 +3,8 @@ class PaymentsController < ApplicationController
 	skip_before_action :verify_authenticity_token, only: [:create, :ccavResponseHandler, :pay]
 	# skip_before_filter :verify_authenticity_token
 
+	# helper_method :prepareMerchantDataFromArray, :prepareMerchantDataFromHash
+
 	# include Crypto
 	def index
 	end
