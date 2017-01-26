@@ -8,7 +8,7 @@ module PaymentsHelper
     amount = params[:total]
     order_id = params[:invoice_id]
 
-    merchant_data += "&currency=INR&redirect_url=https://test.machpay.com/payments/ccavResponseHandler&cancel_url=https://test.machpay.com/payments/ccavResponseHandler&integration_type=iframe_normal&language=EN&merchant_param1=#{referer}&amount=#{amount}&order_id=#{order_id}&"
+    merchant_data += "&currency=INR&redirect_url=http://test.machpay.com/payments/ccavResponseHandler&cancel_url=http://test.machpay.com/payments/ccavResponseHandler&integration_type=iframe_normal&language=EN&merchant_param1=#{referer}&amount=#{amount}&order_id=#{order_id}&"
 
     billing = {}
 

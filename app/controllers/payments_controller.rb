@@ -9,6 +9,22 @@ class PaymentsController < ApplicationController
 	def index
 	end
 
+	def new
+	end
+
+	def update
+		ccavResponseHandler
+	end
+
+	def destroy
+	end
+
+	def edit
+	end
+
+	def show
+	end
+
 	def sample
 		render 'sampleInput'
 	end
