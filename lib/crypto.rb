@@ -12,10 +12,10 @@
 
 
 # class Crypto < ActiveRecord::Base
-class Crypto
+module Crypto
   INIT_VECTOR = (0..15).to_a.pack("C*")
 
-  def encrypt(plain_text, key)
+  def self.encrypt(plain_text, key)
     secret_key =  [Digest::MD5.hexdigest(key)].pack("H*")
     cipher = OpenSSL::Cipher::Cipher.new('aes-128-cbc')
     cipher.encrypt
@@ -25,7 +25,7 @@ class Crypto
     return (encrypted_text.unpack("H*")).first
   end
 
-  def decrypt(cipher_text,key)
+  def self.decrypt(cipher_text,key)
     secret_key =  [Digest::MD5.hexdigest(key)].pack("H*")
     encrypted_text = [cipher_text].pack("H*")
     decipher = OpenSSL::Cipher::Cipher.new('aes-128-cbc')

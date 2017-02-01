@@ -1,5 +1,7 @@
 class PaymentsController < ApplicationController
 
+	include Crypto
+
 	skip_before_action :verify_authenticity_token, only: [:create, :ccavResponseHandler, :pay]
 	# skip_before_filter :verify_authenticity_token
 
@@ -30,15 +32,15 @@ class PaymentsController < ApplicationController
 	end
 
 	def create
-		@crypto = Crypto.new
+		# @crypto = Crypto.new
 		render 'ccavRequestHandler'
 	end
 
 	def ccavResponseHandler
 		working_key="#{ENV['WORKING_KEY']}"#Put in the 32 Bit Working Key provided by CCAVENUES.
 		enc_response=params[:encResp]
-		crypto = Crypto.new
-		dec_resp=crypto.decrypt(enc_response,working_key);
+		# crypto = Crypto.new
+		dec_resp = Crypto.decrypt(enc_response,working_key);
 		dec_resp = dec_resp.split("&")
 
 		url = prepare_response_url dec_resp

@@ -1,5 +1,6 @@
 module PaymentsHelper
 
+  include Crypto
 
   def encrypted_url
     merchant_data="merchant_id=#{ENV['MERCHANT_ID']}"
@@ -41,7 +42,7 @@ module PaymentsHelper
 
     @logger.info("URL: #{merchant_data}")
     @merchant_data = merchant_data
-    @crypto.encrypt(merchant_data,working_key)
+    Crypto.encrypt(merchant_data,working_key)
   end
 
   def prepare_merchant_data(key, value)
