@@ -32,7 +32,7 @@ class PaymentsController < ApplicationController
 	end
 
 	def create
-		# @crypto = Crypto.new
+		@encrypted_url = prepare_encrypted_url(params['customer_info'])
 		render 'ccavRequestHandler'
 	end
 
@@ -49,8 +49,8 @@ class PaymentsController < ApplicationController
 	end
 
 	def pay
-		@crypto = Crypto.new
 		@logger = Logger.new('logfile.log')
+		@encrypted_url = prepare_encrypted_url(params['customer_info'])
 		render 'ccavRequestHandler'
 	end
 
@@ -76,5 +76,30 @@ class PaymentsController < ApplicationController
 		end
 
 		"http://localhost:3005/success?order_id=#{parameters['order_id']}&tracking_id=#{parameters['tracking_id']}&bank_ref_no=#{parameters['bank_ref_no']}&order_status=#{parameters['order_status']}&failure_message=#{parameters['failure_message']}&payment_mode=#{parameters['payment_mode']}&card_name=#{parameters['card_name']}&status_code=#{parameters['status_code']}&status_message=#{parameters['status_message']}&currencyAmount=#{parameters['currencyAmount']}"
+	end
+
+	def prepare_encrypted_url(params)
+		merchant_data="merchant_id=#{ENV['MERCHANT_ID']}"
+		working_key="#{ENV['WORKING_KEY']}"   #Put in the 32 Bit Working Key provided by CCAVENUES.
+
+		merchant_data += "&currency=INR&redirect_url=http://test.machpay.com/payments/ccavResponseHandler&cancel_url=http://test.machpay.com/payments/ccavResponseHandler&integration_type=iframe_normal&language=EN&merchant_param1=#{request.referer}&amount=#{params[:total]}&order_id=#{params[:invoice_id]}&"
+
+		billing = {}
+		billing['billing_name']= params['first_name']+' '+params['last_name']
+		billing['billing_address'] = params['address_1']+', '+ params['address_2']
+		billing['billing_city'] = params['city']
+		billing['billing_state'] = params['state']
+		billing['billing_zip'] = params['zip']
+		billing['billing_country'] = params['country_name']
+		billing['billing_tel'] = params['phone']
+		billing['billing_email'] = params['email']
+
+		billing.each do |key, value|
+			merchant_data += key+'='+value+'&'
+		end
+
+		@logger.info("URL: #{merchant_data}")
+		# @merchant_data = merchant_data
+		Crypto.encrypt(merchant_data,working_key)
 	end
 end
